@@ -245,7 +245,7 @@ form .boks {background-color:black; height:auto; overflow:inherit; color:white;}
 	border-color: #0099cc;
 	border:solid #0099cc;
 }
-#boxPozadina input {width:100%; overflow:none;}
+#boxPozadina input {width:100%; }
 #boxPozadina .col4{color: #E5663D; text-align:left;}
 #boxPozadina button, .boks button{width:100%;}
 #boxPozadina a {display:inline-block;}
