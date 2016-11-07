@@ -21,14 +21,13 @@ Folder Spirala 1:
 	-Stil2.css - css za html stranice
 	1. Design web - Folder u kojem se nalaze skice stranice raðene na https://mockflow.com/
 	2. Design web - Folder u kojem se nalaze skice za mobitel raðene u wix editoru
-	3. HTML - Folder sa svim html podstranicama: 
+	3. HTML - Folder sa svim html podstranicama i korišenim slikama: 
 		a) pocetna.html - pocetna stranica na kojoj se nalaze pojedine slike i buttoni ;
 		b) novosti.html - stranica koja nudi posljednje novosti vezane za lokal (obavještenja i sl.) i moguænost ocjenjivanja;
 		c) galerija.html - stranica koja nudi slike vezane za lokal;
 		d) cjenovnik.html - stranica sa menijem pizzerije ;
 		e) rezervacije.html - stranica koja sadrži formu za rezervisanje mjesta;
 		f) kontakt.html - stranica koja sadrži sve informacije kako pronaæi lokal i kako ih kontaktirati;
-	4. KoristeneSlike - Folder sa svim korištenim slikama na stranici. 
-
+	
 
  
