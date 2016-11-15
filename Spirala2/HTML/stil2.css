@@ -1,0 +1,325 @@
+@import url(http://fonts.googleapis.com/css?family=Gabriela);
+@media only screen and (min-width: 100px) and (max-width: 550px) and  (orientation:portrait) {
+	.kolona.logo{ margin-top:20px; margin-left:5%;} /* da se logo na zaglavljaju postavi fino na sredini*/
+	.kolona.meni{max-width:65%;}
+	.col4, .col8, .col2, .col3, .col9, .col6{ width: 100%;}
+}
+
+/* Postavljanje kako ce izgledati traka meni kada se okrene telefon landscape */ 
+@media only screen and (min-width: 400px) and (max-width: 680px) and (orientation:landscape)
+{
+	.zaglavlje{font-size:0.75em;}
+	.kolona.meni ul li{
+		display:block;
+		width:32%;
+		text-align:center;
+	}
+	.kolona.meni ul{margin-top:-15px;}
+	.glavni {font-size:0.75em;}
+	#traka{font-size:0.9em;}
+}
+
+/* Postavljanje kako ce izgledati traka meni kada je telefon portrait */ 
+@media only screen and (min-width: 100px) and (max-width: 729px) and (orientation:portrait)
+{
+	.zaglavlje{font-size:0.85em;}
+	/*.kolona.meni ul li{
+		display:block;
+		width:100%;
+		text-align:center;
+	} */
+	.kolona.logo {min-width:50%;text-align:center; }
+	
+/*Dok button nije kliknut koriste se ove postavke */ 
+	.kolona.meni{max-width:40%; position:relative; display:inline-block;}
+	ul.meniKlasa, ul.meniKlasa li {display: none; }
+	ul.meniKlasa li a{display: inline-block;}
+
+	.kolona.meni #meniButton {float:right; display:inline-block; margin-right:20px; }
+
+/* Nakon sto se klikne hamburger */	
+	ul.meniKlasa.otvoren {
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
+		min-width:100px;
+		position:relative;
+		overflow:hidden;
+		display:block;
+	}
+	ul.meniKlasa.otvoren li {
+		 float: none;
+		display: inline-block;
+		text-align:center;
+		margin-top:5px;
+	}
+
+}
+
+/* Postavljanje karakteristika za telefon */ 
+@media only screen and (min-width: 100px) and (max-width: 729px) and (orientation:portrait){ /*MOBITEL*/
+	
+	form .kolona.dva { 
+		min-width:100%;
+		padding:2px;		 
+		text-align:left;
+	}
+	.kolona.meni{width:65%;}
+	
+	form .kolona.dva.txt{ text-align:left;}
+
+	button{
+		font-size:0.8em;
+		text-align:center;
+		display:block;
+		min-width:100%;
+	}
+	form button {min-width:100%;}
+	.col4, .col8, .col2, .col3, .col9, .col6{min-width:100%; text-align:left;  width: 49.99%;}
+	
+	#traka .col4 { border-bottom: 1px solid black;}
+	.col8 h1 {margin:0;}
+	.red.boks{
+		min-width:100%; 
+		margin-left:0;
+		margin-right:0;
+	}
+	.boxPozadina {font-size:0.7em;}
+	.Validacija {min-width:100%;}
+	#otvorenaSlikaBox{padding:0px;}
+	#odabranaSlika {min-width:100%;}
+}
+/*TABLET*/
+@media only screen and (min-width: 700px) and (max-width:1200px)  {  
+	.kolona.meni ul li{
+		display:block;
+		font-size:0.95em;
+		width:30%;
+		text-align:center;
+	}
+	.glavni{font-size: 0.75em;}
+	.kolona.meni ul{margin-top:-10px;}
+	#galerija .slika{max-height:200px;}
+	#traka{font-size:0.9em;}
+}
+
+
+/* Zavrsen media query */ 
+*{	
+	font-family: Gabriela;
+	font-size:1.12em;
+	box-sizing: border-box;
+	margin:0;
+}
+
+.container{
+	width: 100%;
+    margin: 0;
+	min-width: 290px;
+	width:100%;
+	padding: 0;
+	float:left;
+	height:auto;
+	font-size:62.5%;
+}
+.col1 {width: 8.33%; float:left;}
+.col2 {width: 16.66%; float:left; padding: 8px; }
+.col3 {width: 25%; float:left; padding: 8px;}
+.col4 {width: 33.33%; float:left; padding: 10px;}
+.col5 {width: 41.66%; float:left;}
+.col6 {width: 50%; float:left; padding:8px;}
+.col7 {width: 58.33%;}
+.col8 {width: 66.66%; float:left; padding: 8px;}
+.col9 {width: 75%; float:left; padding: 8px;}
+.col10 {width: 83.33%;}
+.col11 {width: 91.66%;}
+.col12 {width: 100%;}
+p {width:100%; max-width:100%; text-align:justify;}
+
+.red{
+	width:100%;
+	float:left;
+	padding:2px;
+	height:auto;
+}
+#traka{
+	background-color:#E5663D;
+	width:100%;
+	min-height:15px;
+	float:left;
+	height:auto;
+	text-align:center;
+}
+#traka img {display:inline; border:none;}
+#traka .col4{margin-top:2%; text-align:center;}
+
+.zaglavlje{ background-color:white; }
+
+.kolona{
+	display: inline-block;
+	float: left;
+	min-height: 5px;
+	max-height:100%;
+	color:black;
+	width:100%;
+	height:auto;
+	max-width:100%;
+}
+.kolona.pet{ width:20%; }
+.kolona.dva{ width:49%; text-align:left;}
+.kolona.dva.txt {text-align:right; font-weight:bold;}
+
+.kolona.logo{
+	width: 30%;
+	text-align:center;
+	font-weight:bold;
+	color:#0099cc;
+}
+
+.kolona.meni{
+	width: 70%;
+	text-align:left;
+	margin-top:60px;
+	font-weight: bold;
+}
+.kolona.meni ul li{ display:inline-block; }
+
+.glavni{
+	float: left;
+	width:100%;
+	height:auto;
+	border: 1px solid black;
+	background-image: url("pozadina1.jpg");
+	background-position:center;
+	background-size:cover;
+	padding:10px;
+	text-align:justify;
+}
+
+button{
+	color: white;
+	background-color: #0099CC;
+	float:left;
+	min-width:25%;
+	width:100%;
+	cursor: pointer;
+	border-radius: 1em;
+	text-align:center;
+}
+
+button:hover{ color: #E5663D; }
+
+a, a:link, a:visited{ color: #0099CC; text-decoration:none; }
+a:active, #aktivniLink{
+	background-color:#E5663D;
+    color: white;
+    text-decoration: none;
+}
+a:hover { color: #E5663D;}
+
+
+h1{
+	font-size: 2em;
+	text-align:center;
+	color:black;
+	font-weight: bold;
+	margin-top: 5%;
+}
+
+img {
+	max-width:100%;
+	height:auto;
+	max-height:100%;
+	margin: 0 auto;
+	display:block;
+	position:center;
+}
+.glavni img{border:solid; border-color:#0099cc;}
+#pocetna{width:100%; }
+
+/*FORME*/
+form button {width:auto;}
+form {text-align:justify; display:inline;}
+form .col4, form .col8 {padding:2px;}
+input {max-width:100%; width:65%; height:auto; border-color:#0099cc; font-size:0.9em;}
+input[name=napomena]{height:auto; min-height:100px; width:100%; overflow: scroll; text-align:justify;}
+
+/* BOX U KOJEM CE SE NALAZITI TEXT, SLIKA I DR. */ 
+.boks{
+	max-width:100%;
+	width:100%;
+	margin-bottom: 2%;
+	border-style: solid;
+	height:20%;
+	overflow: scroll;
+	border-color: #0099cc;
+	background-color: lightgrey;
+	float:left;
+	padding:5px;
+}
+form .boks {background-color:black; height:auto; overflow:inherit; color:white;}
+
+/* boxPozadina omogucava da pozadina nekog dijela bude transparent */
+.boxPozadina {
+	background-color: black;
+	padding:2px;
+    opacity: 0.7;
+	height:auto;
+	float:left;
+	color:white;
+	text-align:center;
+	border-color: #0099cc;
+	border:solid #0099cc;
+}
+.boxPozadina input {width:100%; }
+.boxPozadina .col4{color: #E5663D; text-align:left;}
+.boxPozadina button, .boks button{width:100%;}
+.boxPozadina a {display:inline-block;}
+
+#galerija img{ 
+	position:center;
+	border: 1px solid black; 
+	display: block;
+	}
+#galerija .col4 {border:1px solid black;}
+#galerija img:hover { border: 1px solid #777;cursor:pointer; opacity:0.5;}
+#galerija .slika 
+{	position: relative;
+	width: 100%;
+	height: 40%;
+	overflow: hidden;
+}
+#galerija .slika img {width:100%; height:auto; overflow: hidden;}
+.boxPozadina img{border:none;}
+
+.Validacija { width:65%; font-size:0.9em; float:left; display:none;}
+.Validacija img {border:none; float:left;}
+.boxPozadina .Validacija {min-width:100%; }
+#meniButton {display:none;}
+
+#otvorenaSlikaBox{
+    display: none; 
+	width: 100%;
+    height: 100%;
+	margin:auto;
+	position:fixed;
+	padding:100px;
+	background-color:rgba(192,192,192,0.5);
+}
+#otvorenaSlikaBox p{
+	text-align:center;
+	color:Black;
+	font-weight:bold;
+	font-size:25px;
+	margin-top:20px;
+	cursor:pointer;
+}
+
+#odabranaSlika {
+	display: block;
+	width: auto;
+	height:auto;
+    margin: auto;
+}
+
+
+
+
