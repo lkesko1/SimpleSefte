@@ -84,8 +84,8 @@
 	}
 	.boxPozadina {font-size:0.7em;}
 	.Validacija {min-width:100%;}
-	#otvorenaSlikaBox{padding:0px;}
-	#odabranaSlika {min-width:100%;}
+	#otvorenaSlikaBox{padding:0px; margin:0px;}
+	#odabranaSlika {width:100%; height:100%; margin: 0px;}
 }
 /*TABLET*/
 @media only screen and (min-width: 700px) and (max-width:1200px)  {  
