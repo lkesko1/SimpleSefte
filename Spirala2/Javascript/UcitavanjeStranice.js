@@ -1,5 +1,10 @@
 function otvori(stranica) {
-    var ajax = new XMLHttpRequest();
+	var ajax;
+	if (window.XMLHttpRequest) {
+		ajax = new XMLHttpRequest();
+	} else {
+		ajax = new ActiveXObject("Microsoft.XMLHTTP");
+	}
     ajax.onreadystatechange = function () {
     if (ajax.readyState == 4 && ajax.status == 200){
         document.getElementsByClassName("glavni")[0].innerHTML = ajax.responseText;
