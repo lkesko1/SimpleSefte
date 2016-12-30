@@ -9,32 +9,35 @@
 	}
 	else if (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
 		
-		$file = new DOMDocument();
-		$file->load("Admin.xml");
-		$admin = $file->documentElement;
-		foreach($admin->childNodes as $stavka) { 
-			if ($stavka->nodeName == "Username")
-				$user =$stavka->nodeValue;
-			if ($stavka->nodeName == "Password")
-				$password = $stavka->nodeValue;
-		} 
-
-		if ($_REQUEST['username'] === $user && $_REQUEST['password'] === $password)
+		if (file_exists("Admin.xml"))
 		{
-			if (isset($_REQUEST['button'])){
-				$username = $_REQUEST['username'];
-				$_SESSION['username'] = $username;
-				$_SESSION['start'] = time(); 
-				$_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
-				Logovan();
-				
+			$file = new DOMDocument();
+			$file->load("Admin.xml");
+			$admin = $file->documentElement;
+			foreach($admin->childNodes as $stavka) { 
+				if ($stavka->nodeName == "Username")
+					$user =$stavka->nodeValue;
+				if ($stavka->nodeName == "Password")
+					$password = $stavka->nodeValue;
+			} 
 
+			if ($_REQUEST['username'] === $user && $_REQUEST['password'] === $password)
+			{
+				if (isset($_REQUEST['button'])){
+					$username = $_REQUEST['username'];
+					$_SESSION['username'] = $username;
+					$_SESSION['start'] = time(); 
+					$_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
+					Logovan();
+					
+
+				}
 			}
-		}
-		else 
-		{
-			NijeLogovan();
-			echo "<script type='text/javascript'> alert('Pogresan username ili sifra')  </script>";
+			else 
+			{
+				NijeLogovan();
+				echo "<script type='text/javascript'> alert('Pogresan username ili sifra')  </script>";
+			}
 		}
 	}
 	else  NijeLogovan();
