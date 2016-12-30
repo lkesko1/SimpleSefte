@@ -5,6 +5,7 @@ Za osnovne stranice ostavljen je AjAX, a za admin stranice uèitavam stranice bez
 Prijaviti se može samo admin. 
 Nakon prijave, na vrhu stranice je button za Log Out admina i za ureðivanje stranice. Na stranici Uredi postoje buttoni: Prikazi rezervacije, mailove, ocjene i novosti. Zavisno od toga šta želi vidjeti, uèitavaju se podaci iz odgovarajuæeg xml-a. Podaci u XML-u su uneseni od strane korisnika preko formi sa podstranica Rezervacije, Novosti i Kontakt (rezervacije, ocjene i mailovi). 
 Admin može sve podatke brisati, mijenjati ili dodavati nove te vrste, pri èemu su opet izvršene validacije i u php-u sa ispisom greške. 
+Za mobitele tabele sa podacima iz xml-a se skrolaju.
 
 ZADATAK 2. i 3.
 Na samoj stranici Uredjivanja, nalazi se i download CSV-a i to za Rezervacije. 
@@ -15,6 +16,10 @@ Te podatke može vidjeti samo admin, s obzirom da je smisleno da ih samo on vidi.
 ZADATAK 4. 
 Kako mi korisnici nemaju šta pretraživati na stranici, Search sam postavila za Admina na stranici adminMailovi.php. Pretraživanje se vrši prema imenu i mailu. 
 Npr, na samom poèetku, na stranici su izlistani svi mailovi. Kada se pretražuje, kucanjem "LE" izbacit æe prvih 10 imena ili mailova koji sadrže taj string. Ukoliko se klikne na button pretraživanja, prikazuje se nova tabela koja predstravlja rezultat pretraživanja i to sve rezultate, a ne samo 10. Prikazane su ponovo svi podaci za te rezultate koje admin može ponovo ureðivati.
+
+ZADATAK 5.
+Deployment
+http://simplesefte-simple-sefte.44fs.preview.openshiftapps.com/
 
 II  - Šta nije uraðeno? III i IV - Bugovi
 Nije uraðena validacija datuma za formu rezervacije u createXML, jer uvijek spremi današnji datum. Probala sam riješiti problem na razlièite naèine, ali neuspješno. Potpuno isti naèin validacije primjenila sam u rezervacije_izmjene, kada korisnik mijenja datum. Tada se postavi dobar datum i uradila sam validaciju koja je uspješna. Samo za unos novog, datum se resetuje na današnji. 
