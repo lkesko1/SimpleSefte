@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Rezervacije>
+	
+	
+	
+	
+	<Rezervacija>
+		<Name>simba limba</Name>
+		<Phone_number>062-320-716</Phone_number>
+		<Date>2016/12/31</Date>
+		<Time>18:35</Time>
+		<Broj>5</Broj>
+		<Napomena>rucak5</Napomena>
+	</Rezervacija>
+	<Rezervacija>
+		<Name>lejla kesko</Name>
+		<Phone_number>062-320-716</Phone_number>
+		<Date>2016/12/30</Date>
+		<Time>11:51</Time>
+		<Broj>2</Broj>
+		<Napomena>kkkesko99</Napomena>
+	</Rezervacija>
+	<Rezervacija>
+		<Name>Adna karkelja</Name>
+		<Phone_number>061-908-880</Phone_number>
+		<Date>2016/12/30</Date>
+		<Time>15:11</Time>
+		<Broj>12</Broj>
+		<Napomena></Napomena>
+	</Rezervacija>
+	<Rezervacija>
+		<Name>abe ce</Name>
+		<Phone_number>033-834-849</Phone_number>
+		<Date>2016/12/30</Date>
+		<Time>17:12</Time>
+		<Broj>2</Broj>
+		<Napomena>ok</Napomena>
+	</Rezervacija>
+</Rezervacije>

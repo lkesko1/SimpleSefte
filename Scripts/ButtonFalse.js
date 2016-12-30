@@ -1,0 +1,5 @@
+
+function funfalse()
+{
+	return false;
+}
