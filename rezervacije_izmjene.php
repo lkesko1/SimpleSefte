@@ -44,7 +44,7 @@
 						$vrijemeMax="21:30:00";	
 
 						// Validacija svakog inputa prema regexu, i slicno; nema validacije datuma jer uvijek upisuje danasnji datum :(
-						if ($datum > $danasnjiDatum && preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $tel) && preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime) && 
+						if ($datum >= $danasnjiDatum && preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $tel) && preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime) && 
 							intval($broj) > 0 && intval($broj) < 16 && strtotime($vrijeme) >= strtotime($vrijemeMin) &&  strtotime($vrijeme) <=strtotime($vrijemeMax))
 							{
 								$r->Name = $ime;
@@ -63,7 +63,7 @@
 								if (preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime) == false) $greska .= " ime";
 								if (intval($broj) < 1 || intval($broj) > 15) $greska .= " broj osoba";
 								if (strtotime($vrijeme) < strtotime($vrijemeMin) ||  strtotime($vrijeme) > strtotime($vrijemeMax)) $greska .= " vrijeme";
-								if ($datum <= $danasnjiDatum)  $greska .= " datum";
+								if ($datum < $danasnjiDatum)  $greska .= " datum";
 							}
 							break;
 					}

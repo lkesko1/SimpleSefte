@@ -30,7 +30,7 @@ foreach ($izvjestaj->Rezervacija as $r) {
 	$file->Cell(22, 6, $r->Date, 1, 0, 'C');
 	$file->Cell(15, 6, $r->Time, 1, 0, 'C');
 	$file->Cell(11, 6, $r->Broj, 1, 0, 'C');
-	$file->Cell(70, 6, $r->Napomena, 1);
+	$file->Multicell(70, 6, $r->Napomena, 1);
 	$file->Ln();
 //	$string = str_pad(, 30) . " " . str_pad($r->Phone_number, 15) ." " . str_pad(, 15) . " " . str_pad(, 15)
 	//		. " " . str_pad($r->Broj, 15) . " " . str_pad($r->Napomena, 15) . PHP_EOL;
