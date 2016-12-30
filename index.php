@@ -12,8 +12,8 @@
 <SCRIPT src="./../Scripts/ButtonFalse.js"></SCRIPT>
 </HEAD>
 <BODY>
-	 <?php include('./Scripts/createXML.php') ?>
-	  <?php include('./Scripts/login_skripta.php') ?>
+	 <?php include('createXML.php') ?>
+	  <?php include('login_skripta.php') ?>
 	 
 	  
 <div class="container">

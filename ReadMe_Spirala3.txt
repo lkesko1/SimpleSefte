@@ -32,21 +32,22 @@ V  - Lista fajlova
 4. search.php- php za realizovanje search-a u adminMailovi.php, pri èemu se iz dokumenta preuzimaju vrijednosti za Name i Email i vrši se pretraga prema ta dva polja. Broje se vrijednosti koje æe se pokazati u padajuæoj listi. (klik na search button je realizovan u adminMailovi.php)
   search.js - javascript koji koristi AJAX i poziva search.php kako bi se obavilo dinamièko pretraživanje bez refreshanja stranice.
 5. Folder Foto-odgovarajuæe slike 
-6. Folder Scripts - sadrži sljedece skripte: 
+6. a) login_skripta.php - skripta php za uspostavljanje sesije. Provjeravaju se uneseni podaci sa podacima iz fajla Admin.xml koji sadrži username i sifru.
+  b) createXML.php - php skripta za kreiranje odgovarajuæeg XML-a ili unosa podataka u XML. Realizovano je za sve forme, ali se koristi i kada Admin unosi nove rezervacije/mailove/novosti/ocjene. Provjerava da li fajl veæ postoji, ako ne postoji kreira ga, a ako postoji dopisuje u njega. 
+  c)rezervacije_izmjene.php - skripta za brisanje ili promjenu rezervacija koje postoje u Rezervacije.xml. Provjerava se koji je button kliknut i koji se objekat mora obrisati ili izmijenit. Takoðer, u sluèaju provjere vrši se validacija. 
+ d)mailovi_izmjene.php - skripta za brisanje ili promjenu mailova koje postoje u Mailovi.xml. Provjerava se koji je button kliknut i koji se objekat mora obrisati ili izmijenit. Takoðer, u sluèaju provjere vrši se validacija. 
+  e) ocjene_izmjene.php - skripta za brisanje ili promjenu ocjena koje postoje u Ocjene.xml. Provjerava se koji je button kliknut i koji se objekat mora obrisati ili izmijenit. Takoðer, u sluèaju provjere vrši se validacija. 
+   f) novosti_izmjene.php- skripta za brisanje ili promjenu novosti koje postoje u Novosti.xml. Provjerava se koji je button kliknut i koji se objekat mora obrisati ili izmijenit. Takoðer, u sluèaju provjere vrši se validacija.
+7. Folder Scripts - sadrži sljedece skripte: 
 	a)Validacija.js - za validaciju formi
 	b)UcitavanjeStranice.js - za uèitavanje stranica preko Ajaxa
 	c)PrikaziMeni.js - za prikazivanje menija zavisno od ureðaja
 	d)OtvoriSliku.js - za otvaranje slika kod galerije
-	e)login_skripta.php - skripta php za uspostavljanje sesije. Provjeravaju se uneseni podaci sa podacima iz fajla Admin.xml koji sadrži username i sifru.
-	f)createXML.php - php skripta za kreiranje odgovarajuæeg XML-a ili unosa podataka u XML. Realizovano je za sve forme, ali se koristi i kada Admin unosi nove rezervacije/mailove/novosti/ocjene. Provjerava da li fajl veæ postoji, ako ne postoji kreira ga, a ako postoji dopisuje u njega. 
-	g)rezervacije_izmjene.php - skripta za brisanje ili promjenu rezervacija koje postoje u Rezervacije.xml. Provjerava se koji je button kliknut i koji se objekat mora obrisati ili izmijenit. Takoðer, u sluèaju provjere vrši se validacija. 
-	h)mailovi_izmjene.php - skripta za brisanje ili promjenu mailova koje postoje u Mailovi.xml. Provjerava se koji je button kliknut i koji se objekat mora obrisati ili izmijenit. Takoðer, u sluèaju provjere vrši se validacija. 
-	i)ocjene_izmjene.php - skripta za brisanje ili promjenu ocjena koje postoje u Ocjene.xml. Provjerava se koji je button kliknut i koji se objekat mora obrisati ili izmijenit. Takoðer, u sluèaju provjere vrši se validacija. 
-	j) novosti_izmejen.php- skripta za brisanje ili promjenu novosti koje postoje u Novosti.xml. Provjerava se koji je button kliknut i koji se objekat mora obrisati ili izmijenit. Takoðer, u sluèaju provjere vrši se validacija. 
-7. Admin.xml - sadrži podatke za username i sifru
+ 
+8. Admin.xml - sadrži podatke za username i sifru
    Rezervacije.xml, Novosti.xml, Ocjene.xml, Mailovi.xml - xml kreiran prilikom unosa podataka na odgovarajuæoj formi. sadržaj ovih fajlova admin vidi preko stranice adminRezervacije.php i ostalih. Može ih mijenjati ili dodavati nove. Sve promjene se odražavaju na fajlove.
-8. Folder fpdf -  korišten za kreiranje pdf izvještaja
-9. stil2.css, login.css - korišteni css-ovi	
+9. Folder fpdf -  korišten za kreiranje pdf izvještaja
+10. stil2.css, login.css - korišteni css-ovi	
 
 
 

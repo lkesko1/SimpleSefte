@@ -14,7 +14,7 @@
 </HEAD>
 <BODY>
 	
-	  <?php include('./Scripts/login_skripta.php') ?>
+	  <?php include('login_skripta.php') ?>
 	
 	  	<?php 
 			if (!isset($_SESSION['username']))

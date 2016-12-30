@@ -13,8 +13,8 @@
 
 </HEAD>
 <BODY>
-	  <?php include('./Scripts/login_skripta.php') ?>
-	    <?php include('./Scripts/createXML.php') ?>
+	  <?php include('login_skripta.php') ?>
+	    <?php include('createXML.php') ?>
 	  <?php 
 			if (!isset($_SESSION['username']))
 			{
@@ -26,7 +26,7 @@
 			}
 					
 		?>
-	  <?php include('./Scripts/novosti_izmjene.php') ?>
+	  <?php include('novosti_izmjene.php') ?>
 	  <?php
 	  	$id = 1;
 	  		if (file_exists ("Novosti.xml")){ 
