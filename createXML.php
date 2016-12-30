@@ -227,6 +227,7 @@
 				$tagNovosti->appendChild($o);
 				$file->save("Novosti.xml");
 			}
+			else
 			{
 				$greska ="Potrebno je unijeti tekst!";
 			}

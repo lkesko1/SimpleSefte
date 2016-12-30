@@ -19,10 +19,11 @@ Npr, na samom poèetku, na stranici su izlistani svi mailovi. Kada se pretražuje,
 
 ZADATAK 5.
 Deployment
-http://simplesefte-simple-sefte.44fs.preview.openshiftapps.com/
+http://simplesefte-simplesefte.44fs.preview.openshiftapps.com
 
 II  - Šta nije uraðeno? III i IV - Bugovi
 Nije uraðena validacija datuma za formu rezervacije u createXML, jer uvijek spremi današnji datum. Probala sam riješiti problem na razlièite naèine, ali neuspješno. Potpuno isti naèin validacije primjenila sam u rezervacije_izmjene, kada korisnik mijenja datum. Tada se postavi dobar datum i uradila sam validaciju koja je uspješna. Samo za unos novog, datum se resetuje na današnji. 
+
 
 V  - Lista fajlova 
 1. index.php - osnovna stranica, na koju se uèitavaju sve podstranice novosti.php, kontakt.php, rez.php, galerija.php, pocetna.php, cjenovnik.php

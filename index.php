@@ -64,7 +64,7 @@
 				<img id="pocetna" src="./../Foto/izbor0.jpeg">
 			</div>
 			<div class="col4"> 
-				 <div class="red"> <p> <a target="_blank" href="Stranica.png">  <button name="naruci">Naruči online</button> </a></p></div>
+				 <div class="red"> <p> <a target="_blank" href="./../Foto/Stranica.png">  <button name="naruci">Naruči online</button> </a></p></div>
 				 <div class="red"> <img src="./../Foto/izbor2.jpg"> </div>
 				 <div class="red"> <img src="./../Foto/dostava.jpg"> </div>
 				 <div class="red"> <p> <a href="#" onclick="otvori('Cjenovnik')"> <button name="naruci">Meni</button> </a> </p></div>
