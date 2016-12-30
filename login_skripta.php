@@ -10,7 +10,7 @@
 	else if (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
 		
 		$file = new DOMDocument();
-		$file->load("admin.xml");
+		$file->load("Admin.xml");
 		$admin = $file->documentElement;
 		foreach($admin->childNodes as $stavka) { 
 			if ($stavka->nodeName == "Username")
