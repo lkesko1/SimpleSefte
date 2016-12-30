@@ -17,7 +17,7 @@ Kako mi korisnici nemaju šta pretraživati na stranici, Search sam postavila za A
 Npr, na samom poèetku, na stranici su izlistani svi mailovi. Kada se pretražuje, kucanjem "LE" izbacit æe prvih 10 imena ili mailova koji sadrže taj string. Ukoliko se klikne na button pretraživanja, prikazuje se nova tabela koja predstravlja rezultat pretraživanja i to sve rezultate, a ne samo 10. Prikazane su ponovo svi podaci za te rezultate koje admin može ponovo ureðivati.
 
 II  - Šta nije uraðeno? III i IV - Bugovi
-Nije uraðena validacija datuma za formu rezervacije jer vraæa greške ili datum ne validira kako treba. U XML se uvijek spašava današnji datum, a zatim na ispisu iz XML-a, datum se ignoriše kao da nije postavlje. Pa je uvijek u sluèaju izmjena potrebno ponovo postavljati datum. Probala sam riješiti problem na razlièite naèine, ali neuspješno
+Nije uraðena validacija datuma za formu rezervacije u createXML, jer uvijek spremi današnji datum. Probala sam riješiti problem na razlièite naèine, ali neuspješno. Potpuno isti naèin validacije primjenila sam u rezervacije_izmjene, kada korisnik mijenja datum. Tada se postavi dobar datum i uradila sam validaciju koja je uspješna. Samo za unos novog, datum se resetuje na današnji. 
 
 V  - Lista fajlova 
 1. index.php - osnovna stranica, na koju se uèitavaju sve podstranice novosti.php, kontakt.php, rez.php, galerija.php, pocetna.php, cjenovnik.php

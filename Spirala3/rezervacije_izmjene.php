@@ -27,7 +27,8 @@
 						if ($_SERVER["REQUEST_METHOD"] == "POST") {
 						  $ime = input($_POST["ime" . $id]);
 						  $tel = input($_POST["tel" . $id]);
-						  $datum = (isset($_POST["date" . $id]) ? input($_POST["date" . $id]) : null); // ne radi, sprema uvijek danasnji datum 
+						  $datum = $_POST["date" . $id];
+						//  $datum = (isset($_POST["date" . $id]) ? input($_POST["date" . $id]) : null); // ne radi, sprema uvijek danasnji datum 
 						  $vrijeme = input($_POST["vrijeme" . $id]);
 						  $broj = input($_POST["osobe" . $id]);
 						  if (isset($_POST["napomenatekst" . $id])) $napomena = input($_POST["napomenatekst" . $id]);
@@ -36,14 +37,14 @@
 						}
 						
 						$danasnjiDatum = date("Y/m/d");
-						$datum = date("Y/m/d", strtotime($_POST['date' . $id]));
+						//$datum = date("Y/m/d", strtotime($_POST['date' . $id]));
 						
 						// Postavka vremena za radno vrijeme tj moguce sate rezervacije
 						$vrijemeMin="10:00:00";
 						$vrijemeMax="21:30:00";	
 
 						// Validacija svakog inputa prema regexu, i slicno; nema validacije datuma jer uvijek upisuje danasnji datum :(
-						if (preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $tel) && preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime) && 
+						if ($datum > $danasnjiDatum && preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $tel) && preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime) && 
 							intval($broj) > 0 && intval($broj) < 16 && strtotime($vrijeme) >= strtotime($vrijemeMin) &&  strtotime($vrijeme) <=strtotime($vrijemeMax))
 							{
 								$r->Name = $ime;
@@ -62,6 +63,7 @@
 								if (preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime) == false) $greska .= " ime";
 								if (intval($broj) < 1 || intval($broj) > 15) $greska .= " broj osoba";
 								if (strtotime($vrijeme) < strtotime($vrijemeMin) ||  strtotime($vrijeme) > strtotime($vrijemeMax)) $greska .= " vrijeme";
+								if ($datum <= $danasnjiDatum)  $greska .= " datum";
 							}
 							break;
 					}

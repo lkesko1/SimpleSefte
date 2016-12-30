@@ -14,7 +14,8 @@
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			  $ime = input($_POST["ime"]);
 			  $tel = input($_POST["tel"]);
-			  $datum = (isset($_POST["date"]) ? input($_POST["date"]) : null); // ne radi, sprema uvijek danasnji datum 
+			  $datum = $_POST["date"];
+			//  $datum = (isset($_POST["date"]) ? input($_POST["date"]) : null); // ne radi, sprema uvijek danasnji datum 
 			  $vrijeme = input($_POST["vrijeme"]);
 			  $broj = input($_POST["osobe"]);
 			  if (isset($_POST["napomenatekst"])) $napomena = input($_POST["napomenatekst"]);
@@ -22,7 +23,7 @@
 			}
 			
 			$danasnjiDatum = date("Y/m/d");
-			$datum = date("Y/m/d", strtotime($_POST['date']));
+	//		$datum = date("Y/m/d", strtotime($_POST['date'])); // NE RADI NI OVO 
 			
 			// Postavka vremena za radno vrijeme tj moguce sate rezervacije
 			$vrijemeMin="10:00:00";
