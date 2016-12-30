@@ -31,10 +31,6 @@
 
 
 	<div id="prijava">
-		<div class = "red"> 
-			<a href="index.php#" onclick="otvori('login')"> Admin Log In &nbsp </a> 
-		</div>
-		
 		<div class = "red">
 			<form action="index.php#" method="POST"> <?php echo $button;  echo $tekst;  ?>  </form>
 			<?php 
@@ -49,14 +45,14 @@
 	<div id="traka"></div>
 	<div class="red zaglavlje">
 		<div class="kolona logo"> 
-			<a href="index.php#" onclick="otvori('Pocetna')">
+			<a href="index.php#" >
 				<img src="./../Foto/logo.jpg" width="196px" height="130px"></a>
 			<div class="red"> Caffe & Pizzeria </div>
 		</div>
 		<div class="kolona meni">
 		<img id="meniButton" src="./../Foto/hambaspng.png" width="50px" height="50px" onclick="prikaziMeni()">
 			<ul id="meniLista" class="meniKlasa">			
-				<li>|<a href="index.php#" onclick="otvori('Pocetna')" >  Nazad </a>|</li>
+				<li>|<a href="index.php#">  Nazad </a>|</li>
 			</ul>		
 		</div>
 	</div>

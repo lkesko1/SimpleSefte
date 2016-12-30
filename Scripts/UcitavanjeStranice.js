@@ -14,8 +14,9 @@ function otvori(stranica) {
 		}
     }
 	
+	if (stranica!="index")
 	var x = document.getElementById("aktivniLink");
-	x.id="";
+	if (x != null && x != "") x.id="";
 	
     if (stranica === 'Pocetna') {
         ajax.open("POST", "pocetna.php", true);

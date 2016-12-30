@@ -2,7 +2,9 @@
 @media only screen and (min-width: 100px) and (max-width: 550px) and  (orientation:portrait) {
 	.kolona.logo{ margin-top:20px; margin-left:5%;} /* da se logo na zaglavljaju postavi fino na sredini*/
 	.kolona.meni{max-width:65%;}
-	.col4, .col8, .col2, .col3, .col9, .col6{ width: 100%;}
+	.col1, .col4, .col8, .col2, .col3, .col9, .col6{ width: 100%;}
+		table {max-width:100%; overflow: scroll;}
+	.form_pozadina, .form_pozadina .red button, #loginform .red button{ width: 100%; }
 }
 
 /* Postavljanje kako ce izgledati traka meni kada se okrene telefon landscape */ 
@@ -17,11 +19,20 @@
 	.kolona.meni ul{margin-top:-15px;}
 	.glavni {font-size:0.75em;}
 	#traka{font-size:0.9em;}
+		table {max-width:100%; overflow: scroll;}
+	
 }
 
 /* Postavljanje kako ce izgledati traka meni kada je telefon portrait */ 
 @media only screen and (min-width: 100px) and (max-width: 729px) and (orientation:portrait)
 {
+
+
+	#prijava {font-size:0.65em;}
+	.col1{ min-width: 100%;}
+	#bSearch {min-width:100%;}
+	table {max-width:100%; overflow-y:auto;}
+	
 	.zaglavlje{font-size:0.85em;}
 	/*.kolona.meni ul li{
 		display:block;
@@ -62,6 +73,8 @@
 		padding:2px;		 
 		text-align:left;
 	}
+	table td {max-width:100%; overflow: scroll;}
+	
 	.kolona.meni{width:65%;}
 	
 	form .kolona.dva.txt{ text-align:left;}
@@ -347,10 +360,7 @@ form .boks {background-color:black; height:auto; overflow:inherit; color:white;}
 	width:100%;
 }
 .glavni table{
-	margin: 40px;
-	position:center;
-	text-align:center;
-	margin:auto;
+
 }
 .red form button{
 	min-width: 100%;
@@ -368,9 +378,9 @@ textarea{ font-size:90%;}
     display:block;
 }
 
-#bsearch {
+#bSearch {
 	font-size:75%;
-	width:50%;
+	min-width:100%;
 	text-align:center;
 	position:center;
 	
@@ -403,6 +413,22 @@ textarea{ font-size:90%;}
 	display:block;
 }
 
+table{
+border:1px solid black;
+max-width:100%;
+width:auto;
+margin: 40px;
+	position:center;
+	text-align:center;
+	margin:auto;
+	
+}
+
+tbody{
+display:block;
+height:250px;
+overflow:auto;
+}
 
 
 
