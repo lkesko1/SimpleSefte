@@ -29,39 +29,55 @@
 		?>
 	  <?php include('rezervacije_izmjene.php') ?>
 	  <?php
-			$id = 1;
-	  		if (file_exists ("Rezervacije.xml")){ 
-			$tabela = "<h1> Rezervacije </h1><br><br><br>";
-			$file = new SimpleXMLElement("Rezervacije.xml",null,true);
-			$tabela .= "<table> <th> </th> <th> Ime i prezime </th> <th> Broj telefona </th> <th> Datum </th> <th> Vrijeme </th> <th> Broj osoba </th> <th> Napomena </th>";
-				
-		
-		
-			foreach($file->Rezervacija as $r)
-			{
-				$tabela .= "<tr>";
-				$tabela .= "<td>" . $id . ".</td>";		
-				$tabela .= "<form action='#' method='POST'>";
-				$tabela .= "<td> <input type='text' name='ime" . $id . "' value='". $r->Name . "'></td>";		
-				$tabela .= "<td width='150'> <input type='tel' name='tel" . $id . "' value='". $r->Phone_number . " '></td>";		
-				$tabela .= "<td> <input type='date' name='date" . $id . "' value=". $r->Date . "></td>";		
-				$tabela .= "<td width='80'> <input type='time' name='vrijeme" . $id . "' value='". $r->Time . "'></td>";		
-				$tabela .= "<td width='50'> <input type='number' name='osobe" . $id . "' min='1' max='15' step='1' value='". $r->Broj . "' ></td>";		
-				$tabela .= "<td width='400'> <input type='text' name='napomenatekst" . $id . "' value='". $r->Napomena . "'></td>";	
-			
-				$tabela .= "<td> <input type='submit' name='promjenaRez". $id . "' value='Promijeni' >";
-				$tabela .= "</form>";
-				$tabela .= "<form action='#' method='POST'>";
-				$tabela .= "<td> <input type='submit' name='brisanjeRez". $id . "' value='Briši' color='red'>";
-				$tabela .= "</form>";
-				$tabela .= "</tr>";
-				$id++;
+		$id = 1;
+		$tabela = "<h1> Rezervacije </h1><br><br><br>";
+		try
+		{
+			//Povezivanje s bazom
+				$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+				$veza->exec("set names utf8");
+			//Provjeri da li postoji ta tabela 
+			if ($rezultat = $veza->query("SHOW TABLES LIKE 'Rezervacija'")) {
+					if(sizeof($rezultat) >0) {
+						$rezultat = $veza->prepare("SELECT * FROM Rezervacija order by id desc");
+						$rezultat->execute();
+						
+						$tabela .= "<table> <th> </th> <th> Ime i prezime </th> <th> Broj telefona </th> <th> Datum </th> <th> Vrijeme </th> <th> Broj osoba </th> <th> Napomena </th>";
+						foreach($rezultat->fetchAll() as $r)
+						{
+								$datumformat = date("Y-m-d", strtotime($r['datum']));
+								$tabela .= "<tr>";
+								$tabela .= "<td>" . $id . ".</td>";		
+								$tabela .= "<form action='#' method='POST'>";
+								$tabela .= "<td> <input type='text' name='ime" . $id . "' value='". $r['name'] . "'></td>";		
+								$tabela .= "<td width='150'> <input type='tel' name='tel" . $id . "' value='". $r['phone']. " '></td>";		
+								$tabela .= "<td> <input type='date' name='date" . $id . "' value=". $datumformat . "></td>";		
+								$tabela .= "<td width='80'> <input type='time' name='vrijeme" . $id . "' value='". $r['vrijeme']. "'></td>";		
+								$tabela .= "<td width='50'> <input type='number' name='osobe" . $id . "' min='1' max='15' step='1' value='". $r['broj'] . "' ></td>";		
+								$tabela .= "<td width='400'> <input type='text' name='napomenatekst" . $id . "' value='". $r['tekst'] . "'></td>";	
+							
+								$tabela .= "<td> <input type='submit' name='promjenaRez". $id . "' value='Promijeni' >";
+								$tabela .= "</form>";
+								$tabela .= "<form action='#' method='POST'>";
+								$tabela .= "<td> <input type='submit' name='brisanjeRez". $id . "' value='Briši' color='red'>";
+								$tabela .= "</form>";
+								$tabela .= "</tr>";
+								$id++;
+						}		
+						$tabela .= "</table>";
+					}
 			}
-			
-			
-			$tabela .= "</table>";
+				
 		}
-		
+		catch(PDOException $e)
+		{
+			$message ="Connection failed!" . $e->getMessage();
+					echo "<script type='text/javascript'>
+						alert('$message'); 
+						location.href='index.php';
+						</script>";
+		}	
+
 		$dodajRezervaciju = '<button type="submit" name="dodajRezervaciju" value="true">Dodaj novu rezervaciju</button>';
 		
 		
@@ -101,9 +117,9 @@
 	<div id="prijava">
 		
 		<div class = "red">
-			<form action="index.php#" method="POST"> <?php echo $button;  echo $tekst;  ?>  </form>
+			<form action="index.php#" method="POST"> <?php echo $button;  echo $tekstPrijave;  ?>  </form>
 			<?php 
-				if ($tekst != '')
+				if ($tekstPrijave != '')
 					echo '<a href="uredi.php" name="uredi"> Uredi &nbsp </a>';
 			?>	
 		</div>

@@ -1,0 +1,26 @@
+
+
+.form_pozadina{
+    margin: 0 auto;
+    background: #0099CC;
+    width: 30%;
+    padding: 10px;
+	border: none;
+	text-align: center;
+	 color: white;
+	 overflow: hidden;
+}
+
+.form_pozadina .red button
+{
+	width:60%;
+	text-align:center;
+	background-color:lightgrey;
+	color:black;
+	position:center;
+}
+#prijava button{
+	max-width:60%;
+}
+
+

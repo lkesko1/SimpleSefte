@@ -12,9 +12,77 @@
 			<div class="red">  <h1>Novosti</h1> 	</div>
 			<div class="col3"> <img src="./../Foto/naslovna.jpg">  </div>
 			<?php 
-								if (file_exists("Novosti.xml"))
+								//if (file_exists("Novosti.xml"))
+								try
 								{
-									$fajl = new SimpleXMLElement("Novosti.xml",null,true);
+									$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+									$veza->exec("set names utf8");
+									$upit = $veza->prepare("select * from Novost order by id desc");
+									$upit->execute();
+									$textovi = $upit->fetchAll();
+									$n1 = "";
+									$n2 = "";
+									$n3 = "";
+									if (sizeof($textovi)>=3)
+									{
+										$id1 = sizeof($textovi);
+										$id2 = sizeof($textovi)-1;
+										$id3 = sizeof($textovi)-2;
+										$text1 = $veza->prepare("select tekst from novost where id =?");
+										$text1->bindParam(1, $id1, PDO::PARAM_INT);
+										$text1->execute();
+										$text2 = $veza->prepare("select tekst from novost where id =?");
+										$text2->bindParam(1, $id2, PDO::PARAM_INT);
+										$text2->execute();
+										$text3 = $veza->prepare("select tekst from novost where id =?");
+										$text3->bindParam(1, $id3, PDO::PARAM_INT);
+										$text3->execute();
+										
+										while($r = $text1->fetch()) 
+											$n1 = $r['tekst'];
+										while($r = $text2->fetch()) 
+											$n2 = $r['tekst'];
+										while($r = $text3->fetch()) 
+											$n3 = $r['tekst'];
+										
+										
+									}
+									else if (sizeof($textovi)==2)
+									{
+										$id1 = sizeof($textovi);
+										$id2 = sizeof($textovi)-1;
+										$text1 = $veza->prepare("select tekst from Novost where id =?");
+										$text1->bindParam(1, $id1, PDO::PARAM_INT);
+										$text1->execute();
+										$text2 = $veza->prepare("select tekst from Novost where id =?");
+										$text2->bindParam(1, $id2, PDO::PARAM_INT);
+										$text2->execute();
+								
+										while($r = $text1->fetch()) 
+											$n1 = $r['tekst'];
+										while($r = $text2->fetch()) 
+											$n2 = $r['tekst'];
+									}
+									else if (sizeof($textovi)==1)
+									{
+										$id1 = sizeof($textovi);
+										$text1 = $veza->prepare("select tekst from Novost where id =?");
+										$text1->bindParam(1, $id1, PDO::PARAM_INT);
+										$text1->execute();
+								
+										while($r = $text1->fetch()) 
+											$n1 = $r['tekst'];
+									}
+								}
+								catch(PDOException $e)
+								{
+									$message ="Connection failed!" . $e->getMessage();
+									echo "<script type='text/javascript'>
+										alert('$message'); 
+										location.href='index.php';
+										</script>";
+								}
+								/*	$fajl = new SimpleXMLElement("Novosti.xml",null,true);
 									$textovi = array();
 									foreach($fajl->Novost as $n)
 										array_push($textovi, $n);
@@ -33,9 +101,8 @@
 										$n2 = $textovi[sizeof($textovi)-2];
 									}
 									else if (sizeof($textovi)==1)
-										$n1 = $textovi[sizeof($textovi)-1];
+										$n1 = $textovi[sizeof($textovi)-1];*/
 									
-								}
 									
 			?>
 			<div class="col6">

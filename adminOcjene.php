@@ -29,34 +29,49 @@
 		?>
 	  <?php include('ocjene_izmjene.php') ?>
 	  <?php
-			$id = 1;
-		
-	  		if (file_exists ("Ocjene.xml")){ 
-			$tabela = "<h1> Ocjene </h1><br><br><br>";
-			$file = new SimpleXMLElement("Ocjene.xml",null,true);
-			$tabela .= "<table> <th> </th> <th> Ocjena </th>";
-				
-			
-			foreach($file->Ocjena as $r)
-			{
-				$tabela .= "<tr>";
-				$tabela .= "<td>" . $id . ".</td>";		
-				$tabela .= "<form action='#' method='POST'>";
-				$tabela .= "<td width='200'> <input type='number' name='ocjena" . $id . "' min='1' max='5' step='1' value='". $r . "' ></td>";				
-				
-				$tabela .= "<td> <input type='submit' name='promjenaOcjene". $id . "' value='Promijeni' >";
-				$tabela .= "</form>";
-				$tabela .= "<form action='#' method='POST'>";
-				$tabela .= "<td> <input type='submit' name='brisanjeOcjene". $id . "' value='Briši' color='red'>";
-				$tabela .= "</form>";
-				$tabela .= "</tr>";
-				$id++;
+		$id = 1;
+		$tabela = "<h1> Ocjene </h1><br><br><br>";
+		try
+		{
+			//Povezivanje s bazom
+				$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+				$veza->exec("set names utf8");
+			//Provjeri da li postoji ta tabela 
+			if ($rezultat = $veza->query("SHOW TABLES LIKE 'Ocjena'")) {
+					if(sizeof($rezultat) >0) {
+						$rezultat = $veza->prepare("SELECT * FROM Ocjena order by id desc");
+						$rezultat->execute();
+						
+						$tabela .= "<table> <th> </th> <th> Ocjena </th>";
+						foreach($rezultat->fetchAll() as $r)
+						{
+							$tabela .= "<tr>";
+							$tabela .= "<td>" . $id . ".</td>";		
+							$tabela .= "<form action='#' method='POST'>";
+							$tabela .= "<td width='200'> <input type='number' name='ocjena" . $id . "' min='1' max='5' step='1' value='". $r['broj'] . "' ></td>";				
+							
+							$tabela .= "<td> <input type='submit' name='promjenaOcjene". $id . "' value='Promijeni' >";
+							$tabela .= "</form>";
+							$tabela .= "<form action='#' method='POST'>";
+							$tabela .= "<td> <input type='submit' name='brisanjeOcjene". $id . "' value='Briši' color='red'>";
+							$tabela .= "</form>";
+							$tabela .= "</tr>";
+							$id++;
+						}		
+						$tabela .= "</table>";
+					}
 			}
-			
-			$tabela .= "</form>";
-			
-			$tabela .= "</table>";
+				
 		}
+		catch(PDOException $e)
+		{
+			$message ="Connection failed!" . $e->getMessage();
+					echo "<script type='text/javascript'>
+						alert('$message'); 
+						location.href='index.php';
+						</script>";
+		}
+
 		$dodajOcjenu = '<button type="submit" name="dodajOcjenu" value="true">Dodaj novu ocjenu </button>';
 		
 			if(isset($_REQUEST["dodajOcjenu"])){
@@ -84,9 +99,9 @@
 	<div id="prijava">
 		
 		<div class = "red">
-			<form action="index.php#" method="POST"> <?php echo $button;  echo $tekst;  ?>  </form>
+			<form action="index.php#" method="POST"> <?php echo $button;  echo $tekstPrijave;  ?>  </form>
 			<?php 
-				if ($tekst != '')
+				if ($tekstPrijave != '')
 					echo '<a href="uredi.php" name="uredi"> Uredi &nbsp </a>';
 			?>	
 		</div>

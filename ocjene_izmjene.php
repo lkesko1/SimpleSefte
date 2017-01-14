@@ -2,22 +2,24 @@
 
 global $tabela;
 	global $dodajOcjenu;
-		if (file_exists ("Ocjene.xml"))
-		{
-			$file = new simpleXMLElement("Ocjene.xml", null, true);
 			$id = 1;
-			foreach ($file->Ocjena as $r) {			
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza->exec("set names utf8");
+			$rezultatOcjene = $veza->prepare("SELECT * FROM Ocjena order by id desc");
+			$rezultatOcjene->execute();
+			$rezultat=$rezultatOcjene->fetchAll();
+			foreach ($rezultat as $r) {			
 				if (isset($_POST['brisanjeOcjene' . $id]))
 				{
-					unset($file->Ocjena[$id-1]);
-					$file->asXML("Ocjene.xml");
-					break;
+					$brojID = $r['id'];
+					$upit = $veza->prepare("delete FROM Ocjena WHERE id=:brojID");
+					$upit->bindParam(':brojID', $brojID);
+					$upit->execute(); 
+					break; 
 				}		
-				//PROMJENA
+				
 				if (isset($_POST['promjenaOcjene' . $id]))
 				{
-				
-					//VALIDACIJA ZA PROMJENU
 					if (!empty($_REQUEST['ocjena' . $id]) && isset($_REQUEST['ocjena' . $id]))
 					{
 							if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -25,8 +27,11 @@ global $tabela;
 							
 							if ($n <= 5 && $n >= 1)
 							{
-								$file->Ocjena[$id-1] = $n;
-								$file->asXML("Ocjene.xml");
+								$brojID = $r['id'];
+								$upit = $veza->prepare("update Ocjena set broj=:n WHERE id=:brojID");
+								$upit->bindParam(':n', $n);
+								$upit->bindParam(':brojID', $brojID);
+								$upit->execute(); 
 								$greska = "";
 							}
 							else{
@@ -43,6 +48,5 @@ global $tabela;
 				}				
 				$id++;
 			}		
-		}
 		
 ?>

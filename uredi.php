@@ -15,6 +15,7 @@
 <BODY>
 	
 	  <?php include('login_skripta.php') ?>
+	    <?php include('xmlBaza.php') ?>
 	
 	  	<?php 
 			if (!isset($_SESSION['username']))
@@ -32,9 +33,9 @@
 
 	<div id="prijava">
 		<div class = "red">
-			<form action="index.php#" method="POST"> <?php echo $button;  echo $tekst;  ?>  </form>
+			<form action="index.php#" method="POST"> <?php echo $button;  echo $tekstPrijave;  ?>  </form>
 			<?php 
-				if ($tekst != '')
+				if ($tekstPrijave != '')
 					echo '<a href="uredi.php" name="uredi"> Uredi &nbsp </a>';
 				
 			?>	
@@ -70,7 +71,10 @@
 			 <div class = "red" align="center"> PDF Izvještaj:  </div>
 			<a href="pdf.php" > <img src="./../Foto/pdf.png" width ='60px' height="60px"> </a> 
 			</div>
-			<div class = "col4"></div>
+			<div class = "col4"> 
+				<form action="#" method="POST">
+				<button type="submit" name="uBazuButton" value="submit" > Xml u Bazu</button></div>
+				</form>
 		</div>
 		<div class = "col4"></div>
 		
@@ -93,6 +97,11 @@
 				<div class = "red"> 
 				<form id ="AdminNovosti" action = "adminNovosti.php" method = "POST">
 					<button type="submit" name="novostiButton" value="Submit"> Prikazi novosti </button>
+				</form>
+				</div>
+				<div class = "red"> 
+				<form id ="AdminJelovnik" action = "adminJelovnik.php" method = "POST">
+					<button type="submit" name="jelovnikButton" value="Submit"> Uredi jelovnik </button>
 				</form>
 				</div>
 					

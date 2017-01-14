@@ -136,7 +136,7 @@
 .col1 {width: 8.33%; float:left;}
 .col2 {width: 16.66%; float:left; padding: 8px; }
 .col3 {width: 25%; float:left; padding: 8px;}
-.col4 {width: 33.33%; float:left; padding: 10px;}
+.col4 {width: 33.33%; float:left; padding: 10px; }
 .col5 {width: 41.66%; float:left;}
 .col6 {width: 50%; float:left; padding:8px;}
 .col7 {width: 58.33%;}
@@ -170,7 +170,6 @@ p {width:100%; max-width:100%; text-align:justify;}
 	display: inline-block;
 	float: left;
 	min-height: 5px;
-	max-height:100%;
 	color:black;
 	width:100%;
 	height:auto;
@@ -428,5 +427,10 @@ display:block;
 overflow:auto;
 }
 
-
+#adminJelo{
+	border:2px solid black;
+	font-size:60%;
+}
+	
+h4 {text-align:center;}
 

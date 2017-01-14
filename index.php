@@ -25,10 +25,10 @@
 		</div>
 		
 		<div class = "red">
-			<form action="#" method="POST"> <?php echo $button;  echo $tekst;  ?>  </form>
+			<form action="#" method="POST"> <?php echo $button;  echo $tekstPrijave;  ?>  </form>
 			<?php 
 				$stranica = "'index.html'";
-				if ($tekst != '')
+				if ($tekstPrijave != '')
 					echo '<a href="uredi.php" name="uredi"> Uredi &nbsp </a>';
 			?>
 			

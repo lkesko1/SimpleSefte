@@ -1,32 +1,37 @@
 <?php
 global $tabela;
 	global $dodajNovost;
-		if (file_exists ("Novosti.xml"))
-		{
-			$file = new simpleXMLElement("Novosti.xml", null, true);
 
 			$id = 1;
-			foreach ($file->Novost as $r) {			
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza->exec("set names utf8");
+			$rezultatNovost = $veza->prepare("SELECT * FROM Novost order by id desc");
+			$rezultatNovost->execute();
+			$rezultat=$rezultatNovost->fetchAll();
+			sizeof($rezultat);
+			foreach ($rezultat as $r) {			
 				if (isset($_POST['brisanjeNovost' . $id]))
 				{
-					unset($file->Novost[$id-1]);
-					$file->asXML("Novosti.xml");
-					break;
+					$brojID = $r['ID'];
+					$upit = $veza->prepare("delete FROM Novost WHERE ID=:brojID");
+					$upit->bindParam(':brojID', $brojID);
+					$upit->execute(); 
+					break; 
 				}		
-				//PROMJENA
+			
 				if (isset($_POST['promjenaNovost' . $id]))
 				{
-				
-					//VALIDACIJA ZA PROMJENU
 					if (!empty($_REQUEST['novosti' . $id]) && isset($_REQUEST['novosti' . $id]))
 					{
 							if ($_SERVER["REQUEST_METHOD"] == "POST") 
 							  $n = input($_POST["novosti" . $id]);
 							
-							
-								$file->Novost[$id-1] = $n;
-								$file->asXML("Novosti.xml");
-								$greska = "";
+							$brojID = $r['ID'];
+							$upit = $veza->prepare("update Novost set tekst=:n WHERE id=:brojID");
+							$upit->bindParam(':n', $n);
+							$upit->bindParam(':brojID', $brojID);
+							$upit->execute(); 
+							$greska = "";
 						break;
 					}
 					else
@@ -34,14 +39,7 @@ global $tabela;
 						$greska = "Potrebno je unijeti text!";
 					}
 				}				
+				
 				$id++;
 			}
-			
-		}
-		
-		if (isset($_POST['dodajNovost']))
-		{
-			
-		
-		}
 ?>

@@ -3,64 +3,82 @@
 global $idevi;
 $idevi ="";
 $idevi = array();
-	
-	
-if (file_exists('Mailovi.xml'))
-{
-	
-	$fajl=new DOMDocument();
-	$fajl->load('Mailovi.xml');
-	$mailovi = $fajl->getElementsByTagName('Mail');
-	$q = $_GET['q'];
-	$string = "";
 
-	$k = 0;
-	
-	if (strlen($q)>0) 
-	{
-		$broj = 0;
-		$velicina = $mailovi->length;
-		for ($i = 0; $i <$velicina; $i++)
+try
 		{
-			$ime = $mailovi->item($i)->getElementsByTagName('Name');
-			$mail = $mailovi->item($i)->getElementsByTagName('Email');
-			if ($ime->item(0)->nodeType==1)
-			{
-				if (stristr($ime->item(0)->childNodes->item(0)->nodeValue, $q) || stristr($mail->item(0)->childNodes->item(0)->nodeValue, $q))
-				{
-					if ($string == "")
-					{
-						if (stristr($ime->item(0)->childNodes->item(0)->nodeValue, $q) && $broj < 10)
-						{
-							$string = $string . "<br/>" . $ime->item(0)->childNodes->item(0)->nodeValue . PHP_EOL;
-							$broj++;
-						}
-						if (stristr($mail->item(0)->childNodes->item(0)->nodeValue, $q) && $broj < 10)
-						{
-							$string = $string . "<br/>" . $mail->item(0)->childNodes->item(0)->nodeValue . PHP_EOL;
-							$broj++;
-						}
+			//Povezivanje s bazom
+				$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+				$veza->exec("set names utf8");
+			//Provjeri da li postoji ta tabela 
+			if ($rezultat = $veza->query("SHOW TABLES LIKE 'Mail'")) {
+					if(sizeof($rezultat) >0) {
+						$rezultat = $veza->prepare("SELECT * FROM Mail");
+						$rezultat->execute();
+				
+						
+							$q = $_GET['q'];
+							$string = "";
+
+							$k = 0;
+							
+							if (strlen($q)>0) 
+							{
+								$broj = 0;
+								foreach($rezultat->fetchAll() as $r)
+								{
+									$ime = $r['name'];
+									$mail = $r['adresa'];
+								//	if ($ime->item(0)->nodeType==1)
+									//{
+										if (stristr($ime, $q) || stristr($mail, $q))
+										{
+											if ($string == "")
+											{
+												if (stristr($ime, $q) && $broj < 10)
+												{
+													$string = $string . "<br/>" . $ime . PHP_EOL;
+													$broj++;
+												}
+												if (stristr($mail, $q) && $broj < 10)
+												{
+													$string = $string . "<br/>" . $mail . PHP_EOL;
+													$broj++;
+												}
+											}
+											else
+											{
+												if (stristr($ime, $q) && $broj < 10)
+												{
+													$string = $string . "<br/>" . $ime . PHP_EOL;
+													$broj++;
+												}
+												if (stristr($mail, $q) && $broj < 10) 
+												{
+													$string = $string . "<br/>" . $mail . PHP_EOL;
+													$broj++;
+												}
+											}
+											$k++;
+											array_push($idevi, $k);
+										}
+									//}
+								}
+							}
+							
+							echo $string;
+						
+						
 					}
-					else
-					{
-						if (stristr($ime->item(0)->childNodes->item(0)->nodeValue, $q) && $broj < 10)
-						{
-							$string = $string . "<br/>" . $ime->item(0)->childNodes->item(0)->nodeValue . PHP_EOL;
-							$broj++;
-						}
-						if (stristr($mail->item(0)->childNodes->item(0)->nodeValue, $q) && $broj < 10) 
-						{
-							$string = $string . "<br/>" . $mail->item(0)->childNodes->item(0)->nodeValue . PHP_EOL;
-							$broj++;
-						}
-					}
-					$k++;
-					array_push($idevi, $k);
-				}
 			}
+				
 		}
-	}
+		catch(PDOException $e)
+		{
+			$message ="Connection failed!" . $e->getMessage();
+					echo "<script type='text/javascript'>
+						alert('$message'); 
+						location.href='index.php';
+						</script>";
+		}	
 	
-	echo $string;
-}
 	?>

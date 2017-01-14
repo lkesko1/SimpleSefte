@@ -2,24 +2,25 @@
 	
 	global $tabela;
 	global $dodajRezervaciju;
-		if (file_exists ("Rezervacije.xml"))
-		{
-			$file = new simpleXMLElement("Rezervacije.xml", null, true);
-
 			$id = 1;
-			foreach ($file->Rezervacija as $r) {		
-				//BRISANJE 
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza->exec("set names utf8");
+			$rezultatR = $veza->prepare("SELECT * FROM Rezervacija order by id desc");
+			$rezultatR->execute();
+			$rezultat=$rezultatR->fetchAll();
+			sizeof($rezultat);
+			foreach ($rezultat as $r) {			
 				if (isset($_POST['brisanjeRez' . $id]))
 				{
-					unset($file->Rezervacija[$id-1]);
-					$file->asXML("Rezervacije.xml");
-					break;
+					$brojID = $r['id'];
+					$upit = $veza->prepare("delete FROM Rezervacija WHERE id=:brojID");
+					$upit->bindParam(':brojID', $brojID);
+					$upit->execute(); 
+					break; 
 				}	
-				//PROMJENA
+
 				if (isset($_POST['promjenaRez' . $id]))
 				{
-
-					//VALIDACIJA ZA PROMJENU
 					if (!empty($_REQUEST['ime' . $id]) && !empty($_REQUEST['tel' . $id]) && !empty($_REQUEST['date' . $id]) && !empty($_REQUEST['vrijeme' . $id]) && !empty($_REQUEST['osobe' . $id]) &&
 						isset($_REQUEST['ime' . $id]) && isset($_REQUEST['tel' . $id]) && isset($_REQUEST['date' . $id]) && isset($_REQUEST['vrijeme' . $id]) && isset($_REQUEST['osobe' . $id]) )
 					{
@@ -47,13 +48,15 @@
 						if ($datum >= $danasnjiDatum && preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $tel) && preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime) && 
 							intval($broj) > 0 && intval($broj) < 16 && strtotime($vrijeme) >= strtotime($vrijemeMin) &&  strtotime($vrijeme) <=strtotime($vrijemeMax))
 							{
-								$r->Name = $ime;
-								$r->Phone_number = $tel;
-								$r->Date = $datum;
-								$r->Time = $vrijeme;
-								$r->Broj = $broj;
-								$r->Napomena = $napomena;
-								$file->asXML("Rezervacije.xml");
+								$brojID = $r['ID'];
+								$unos = $veza->prepare("update rezervacija set name=?, phone=?, datum=?, vrijeme=?, broj=?, tekst=?  WHERE id=:brojID");
+								$unos->bindValue(1, $ime, PDO::PARAM_INT); 
+								$unos->bindValue(2, $phone, PDO::PARAM_INT); 
+								$unos->bindValue(3, $datum, PDO::PARAM_INT); 
+								$unos->bindValue(4, $vrijeme, PDO::PARAM_INT); 
+								$unos->bindValue(5, $broj, PDO::PARAM_INT); 
+								$unos->bindValue(6, $tekstNapomena, PDO::PARAM_INT); 
+								$unos->execute();
 								$greska = "";
 							}
 							else
@@ -71,11 +74,10 @@
 					{
 						$greska = "Sva polja osim napomene su obavezna!";
 					}
-				}
+				} 
 				$id++;
 			
 			}
-		}
 		
 
 

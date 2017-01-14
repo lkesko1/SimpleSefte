@@ -18,8 +18,7 @@
 			//  $datum = (isset($_POST["date"]) ? input($_POST["date"]) : null); // ne radi, sprema uvijek danasnji datum 
 			  $vrijeme = input($_POST["vrijeme"]);
 			  $broj = input($_POST["osobe"]);
-			  if (isset($_POST["napomenatekst"])) $napomena = input($_POST["napomenatekst"]);
-			  
+			  if (isset($_POST["napomenatekst"])) $napomena = input($_POST["napomenatekst"]);  
 			}
 			
 			$danasnjiDatum = date("Y/m/d");
@@ -33,29 +32,29 @@
 			if (preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $tel) && preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime) && 
 				intval($broj) > 0 && intval($broj) < 16 && strtotime($vrijeme) >= strtotime($vrijemeMin) &&  strtotime($vrijeme) <=strtotime($vrijemeMax))
 				{
-					//Niz svih vrijednosti inputa
-					$Unos = array('Name'=>$ime, 'Phone_number'=>$tel, 'Date'=>$datum, 'Time'=>$vrijeme, 'Broj'=>$broj, 'Napomena'=>$napomena);
-							
-				
-					if (file_exists ("Rezervacije.xml")){ 
-						$fajl = file_get_contents("Rezervacije.xml");
-						if ($fajl == '') // moguce je da file postoji ali je prazan
-							$fajl = $fajl . kreiraj_xml($Unos, 0);
-						else //fajl postoji i u njemu je neki sadržaj
-						{
-							
-							$niz = file("Rezervacije.xml");
-							unset($niz[count($niz)-1]);
-							$fajl = implode('', $niz);
-							$fajl = $fajl . kreiraj_xml($Unos, 1);
-						}
-					}
-					else
-						$fajl = kreiraj_xml($Unos, 0); //fajl uopce ne postoji, pa se kreira novi
-			
-					// Upisivanje sadržaja u file Rezervacije.xml
-					file_put_contents("Rezervacije.xml",  $fajl); 
 					
+					//UNOS U BAZU
+					try
+					{
+						$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+						$veza->exec("set names utf8");
+						$unos = $veza->prepare("Insert into Rezervacija set name =?, phone =?, datum =?, vrijeme =?, broj =?, tekst =?");
+						$unos->bindValue(1,$ime, PDO::PARAM_INT);
+						$unos->bindValue(2,$tel, PDO::PARAM_INT);
+						$unos->bindValue(3,$datum, PDO::PARAM_INT);
+						$unos->bindValue(4,$vrijeme, PDO::PARAM_INT);
+						$unos->bindValue(5,$broj, PDO::PARAM_INT);
+						$unos->bindValue(6,$napomena, PDO::PARAM_INT);
+						$unos->execute();
+					}
+					catch(PDOException $e)
+					{
+						$message ="Connection failed!" . $e->getMessage();
+						echo "<script type='text/javascript'>
+							alert('$message'); 
+							location.href='index.php';
+							</script>";
+					}
 				}
 			else
 			{
@@ -63,9 +62,7 @@
 				if (preg_match('/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{3})$/', $tel) == false) $greska .= "broj telefona" ;
 				if (preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime) == false) $greska .= " ime";
 				if (intval($broj) < 1 || intval($broj) > 15) $greska .= " broj osoba";
-				if (strtotime($vrijeme) < strtotime($vrijemeMin) ||  strtotime($vrijeme) > strtotime($vrijemeMax)) $greska .= " vrijeme";
-				
-				
+				if (strtotime($vrijeme) < strtotime($vrijemeMin) ||  strtotime($vrijeme) > strtotime($vrijemeMax)) $greska .= " vrijeme";	
 			}
 		}
 		else
@@ -73,51 +70,6 @@
 			$greska = "Sva polja osim napomene su obavezna.";
 		}
 	}
-		
-
-		
-	function kreiraj_xml($unos, $prazan)
-	{
-		
-		
-		//Ako je file prazan unosi se ovaj prvi red
-		if ($prazan === 0)
-			$string = '<?xml version="1.0" encoding="UTF-8" ?>' . PHP_EOL . '<Rezervacije>'  . PHP_EOL;
-		else //ako file nije prazan nastavlja se upisivanje u file u novom redu
-			$string = '';
-		
-		$brojReda = 2;
-		$podatak = 'Rezervacija';
-		$string = $string . uvuci($brojReda - 1) . '<' .$podatak. '>' . PHP_EOL;
-		
-		foreach($unos as $tag => $vrijednost)
-		{
-			if(!is_array($vrijednost))
-				$string.= uvuci($brojReda) . '<' . htmlspecialchars($tag) . '>' . $vrijednost . '</' . htmlspecialchars($tag) . '>' . PHP_EOL;
-			else
-				$string = $string . kreiraj_xml($vrijednost, $tag, $brojReda + 1) . PHP_EOL;
-		}
-		
-		$brojUvlacenja = $brojReda - 1;
-		$string = $string . uvuci($brojUvlacenja) . '</' . $podatak . '>'  . PHP_EOL . '</Rezervacije>';
-		
-
-		return $string;
-	}
-
-
-	function uvuci($brojUvlacenja)
-	{
-		// Koristi se za formatiranje xml file-a, da bi postojao odgovarajući broj tabova
-		$tabovi = "";
-		if ($brojUvlacenja > 0)
-		{
-			for($i = 1; $i <= $brojUvlacenja; $i++) 
-				$tabovi = $tabovi . "\t"; 
-		}
-		return $tabovi;
-	}
-	
 	
 	/* PHP VALIDACIJA I KREIRANJE XML-A SA OCJENAMA*/ 
 	if (isset($_REQUEST["ocjenaButton"]) || isset($_REQUEST["buttonSpremiOcjenu"]) )
@@ -125,21 +77,23 @@
 		// DA LI JE KLIKNUTA NEKA OCJENA, AKO NIJE NECE SPREMITI U XML NISTA 
 			if (isset($_REQUEST["ocjena"]) && $_REQUEST["ocjena"]>0 && $_REQUEST["ocjena"]<6 )
 			{
-				if (file_exists ("Ocjene.xml") == false){ 
-					$file = new DOMDocument('1.0', 'utf-8');
-					$file->formatOutput = true;
-					$tagOcjene = $file->createElement("Ocjene");
-					$file->appendChild( $tagOcjene );
-					$file->save("Ocjene.xml");
+				try
+				{
+				$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+					$veza->exec("set names utf8");
+					$ocjena=$_REQUEST['ocjena'];
+					$unos = $veza->prepare("Insert into ocjena set broj =?");
+					$unos->bindValue(1,$ocjena, PDO::PARAM_INT);
+					$unos->execute();
 				}
-				$file = new DOMDocument();
-				$file->load("Ocjene.xml");
-				$tagOcjene = $file->documentElement;
-				$ocjena = $_REQUEST["ocjena"];
-				$o = $file->createElement("Ocjena");
-				$o->appendChild($file->createTextNode( $ocjena ));
-				$tagOcjene->appendChild($o);
-				$file->save("Ocjene.xml");
+				catch(PDOException $e)
+				{
+					$message ="Connection failed!" . $e->getMessage();
+					echo "<script type='text/javascript'>
+						alert('$message'); 
+						location.href='index.php';
+						</script>";
+				}
 			}
 			else{
 				$greska = "Potrebno je unijeti ocjenu!";
@@ -158,39 +112,27 @@
 			}
 				if (preg_match('/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/', $mail) && preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $ime))
 				{
-					// Ispitivanje da li file postoji uopce, ako postoji u njega se upisuje, a ako ne postoji, kreira se novi
-						if (file_exists ("Mailovi.xml") == false){ 
-							$file = new DOMDocument('1.0', 'utf-8');
-							$file->formatOutput = true;
-							$tagMailovi = $file->createElement("Mailovi");
-							$file->appendChild( $tagMailovi );
-							$file->save("Mailovi.xml");
-						}
-						$file = new DOMDocument();
-						$file->load("Mailovi.xml");
-						$tagMailovi = $file->documentElement;
-						$tagMail = $file->createElement("Mail");
-						
-						$tagName = $file->createElement("Name");
-						$tagName->appendChild($file->createTextNode($ime));
-						$tagMail->appendChild($tagName);
-						
-						$tagEmail = $file->createElement("Email");
-						$tagEmail->appendChild($file->createTextNode($mail));
-						$tagMail->appendChild($tagEmail);
-						
-						$tagSubject = $file->createElement("Subject");
-						$tagSubject->appendChild($file->createTextNode($subject));
-						$tagMail->appendChild($tagSubject);
-						
-						$tagText= $file->createElement("Text");
-						$tagText->appendChild($file->createTextNode($text));
-						$tagMail->appendChild($tagText);
-						
-						$tagMailovi->appendChild($tagMail);
-						
-						$file->save("Mailovi.xml");
-			
+					
+					//UNOS U BAZU
+					try
+					{
+						$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+						$veza->exec("set names utf8");
+						$unos = $veza->prepare("Insert into mail set name =?, adresa =?, subject =?, tekst =?");
+						$unos->bindValue(1,$ime, PDO::PARAM_INT);
+						$unos->bindValue(2,$mail, PDO::PARAM_INT);
+						$unos->bindValue(3,$subject, PDO::PARAM_INT);
+						$unos->bindValue(4,$text, PDO::PARAM_INT);
+						$unos->execute();
+					}
+					catch(PDOException $e)
+					{
+						$message ="Connection failed!" . $e->getMessage();
+						echo "<script type='text/javascript'>
+							alert('$message'); 
+							location.href='index.php';
+							</script>";
+					}
 						$message = "Poruka je uspješno poslana.";
 				}
 				else
@@ -211,21 +153,25 @@
 	{
 			if (isset($_REQUEST["novostText"]))
 			{
-				if (file_exists ("Novosti.xml") == false){ 
-					$file = new DOMDocument('1.0', 'utf-8');
-					$file->formatOutput = true;
-					$tagNovosti = $file->createElement("Novosti");
-					$file->appendChild( $tagNovosti );
-					$file->save("Novosti.xml");
+				
+				//UNOS U BAZU
+				try
+				{
+					$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+					$veza->exec("set names utf8");
+					$novost = input($_REQUEST["novostText"]);
+					$unos = $veza->prepare("Insert into novost set tekst =?");
+					$unos->bindValue(1,$novost, PDO::PARAM_INT);
+					$unos->execute();
 				}
-				$file = new DOMDocument();
-				$file->load("Novosti.xml");
-				$tagNovosti = $file->documentElement;
-				$novost = input($_REQUEST["novostText"]);
-				$o = $file->createElement("Novost");
-				$o->appendChild($file->createTextNode( $novost ));
-				$tagNovosti->appendChild($o);
-				$file->save("Novosti.xml");
+				catch(PDOException $e)
+				{
+					$message ="Connection failed!" . $e->getMessage();
+					echo "<script type='text/javascript'>
+						alert('$message'); 
+						location.href='index.php';
+						</script>";
+				}
 			}
 			else
 			{

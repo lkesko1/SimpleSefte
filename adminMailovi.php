@@ -28,37 +28,52 @@
 		?>
 	  <?php include('mailovi_izmjene.php') ?>
 	  <?php
-			$id = 1;
-	  		if (file_exists ("Mailovi.xml")){ 
-			$tabela = "<h1> Mailovi </h1><br><br><br>";
-			$file = new SimpleXMLElement("Mailovi.xml",null,true);
-			$tabela .= "<table> <th> </th> <th> Ime i prezime </th> <th> Email </th> <th> Predmet </th> <th> Tekst </th>";
-				
-			
-		
-			foreach($file->Mail as $r)
-			{
-				$tabela .= "<tr>";
-				$tabela .= "<td>" . $id . ".</td>";		
-				$tabela .= "<form action='#' method='POST'>";
-				$tabela .= "<td width='200'> <input type='text' name='ime" . $id . "' value='". $r->Name . "'></td>";		
-				$tabela .= "<td width='230'> <input type='text' name='mail" . $id . "'  value='". $r->Email . " '></td>";		
-				$tabela .= "<td> <input type='text' name='subject" . $id . "'  value='". $r->Subject . "'></td>";		
-				$tabela .= "<td> <textarea rows='3' name='mailtekst" . $id . "' cols='65'>". $r->Text . "</textarea>";			
-				
-				$tabela .= "<td> <input type='submit' name='promjenaMail". $id . "' value='Promijeni' >";
-				$tabela .= "</form>";
-				$tabela .= "<form action='#' method='POST'>";
-				$tabela .= "<td> <input type='submit' name='brisanjeMail". $id . "' value='Briši' color='red'>";
-				$tabela .= "</form>";
-				$tabela .= "</tr>";
-				$id++;
+		$id = 1;
+		$tabela = "<h1> Mailovi </h1><br><br><br>";
+		try
+		{
+			//Povezivanje s bazom
+				$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+				$veza->exec("set names utf8");
+			//Provjeri da li postoji ta tabela 
+			if ($rezultat = $veza->query("SHOW TABLES LIKE 'Mail'")) {
+					if(sizeof($rezultat) >0) {
+						$rezultat = $veza->prepare("SELECT * FROM Mail order by id desc");
+						$rezultat->execute();
+						
+						$tabela .= "<table> <th> </th> <th> Ime i prezime </th> <th> Email </th> <th> Predmet </th> <th> Tekst </th>";
+						foreach($rezultat->fetchAll() as $r)
+						{
+							$tabela .= "<tr>";
+							$tabela .= "<td>" . $id . ".</td>";		
+							$tabela .= "<form action='#' method='POST'>";
+							$tabela .= "<td width='200'> <input type='text' name='ime" . $id . "' value='". $r['name'] . "'></td>";		
+							$tabela .= "<td width='230'> <input type='text' name='mail" . $id . "'  value='". $r['adresa']. " '></td>";		
+							$tabela .= "<td> <input type='text' name='subject" . $id . "'  value='". $r['subject'] . "'></td>";		
+							$tabela .= "<td> <textarea rows='3' name='mailtekst" . $id . "' cols='65'>". $r['tekst'] . "</textarea>";			
+							
+							$tabela .= "<td> <input type='submit' name='promjenaMail". $id . "' value='Promijeni' >";
+							$tabela .= "</form>";
+							$tabela .= "<form action='#' method='POST'>";
+							$tabela .= "<td> <input type='submit' name='brisanjeMail". $id . "' value='Briši' color='red'>";
+							$tabela .= "</form>";
+							$tabela .= "</tr>";
+							$id++;
+						}		
+						$tabela .= "</table>";
+					}
 			}
-			
-			$tabela .= "</form>";
-			
-			$tabela .= "</table>";
+				
 		}
+		catch(PDOException $e)
+		{
+			$message ="Connection failed!" . $e->getMessage();
+					echo "<script type='text/javascript'>
+						alert('$message'); 
+						location.href='index.php';
+						</script>";
+		}
+
 		$dodajMail = '<button type="submit" name="dodajMail" value="true">Dodaj novi Mail</button>';
 		
 		if(isset($_REQUEST["dodajMail"])){
@@ -95,9 +110,9 @@
 		</div>
 		
 		<div class = "red">
-			<form action="index.php#" method="POST"> <?php echo $button;  echo $tekst;  ?>  </form>
+			<form action="index.php#" method="POST"> <?php echo $button;  echo $tekstPrijave;  ?>  </form>
 			<?php 
-				if ($tekst != '')
+				if ($tekstPrijave != '')
 					echo '<a href="uredi.php" name="uredi"> Uredi &nbsp </a>';
 			?>	
 		</div>
@@ -138,41 +153,58 @@
 	
 		if (isset($_REQUEST['bSearch']) && isset($_REQUEST['pretragaInput']) && !empty($_REQUEST['pretragaInput']))
 		{
-			if (file_exists("Mailovi.xml"))
+			try
 			{
-				$novaTabela = "";
-				$fajlUcitaj = new SimpleXMLElement("Mailovi.xml",null,true);
+					//Povezivanje s bazom
+						$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+						$veza->exec("set names utf8");
+					//Provjeri da li postoji ta tabela 
+					if ($rezultat = $veza->query("SHOW TABLES LIKE 'Mail'")) {
+						if(sizeof($rezultat) >0) {
+							$rezultat = $veza->prepare("SELECT * FROM Mail");
+							$rezultat->execute();
+	
+							$novaTabela = "";
 				
-					$novaTabela .= "<h1> Rezultati pretrage za " . $_REQUEST['pretragaInput'] . ": </h1><br><br><br>";
-					$novaTabela .= "<table> <th> </th> <th> Ime i prezime </th> <th> Email </th> <th> Predmet </th> <th> Tekst </th>";
-					$k = 1;
-					$i = 1;
-					foreach($fajlUcitaj->Mail as $mail)
-					{
-						if (isset($_REQUEST['pretragaInput']) &&  (stristr($mail->Name, $_REQUEST['pretragaInput']) || stristr($mail->Email, $_REQUEST['pretragaInput']) ))
-						{
-							$novaTabela .= "<tr>";
-							$novaTabela .= "<td>" . $k . ".</td>";		
-							$novaTabela .= "<form action='#' method='POST'>";
-							$novaTabela .= "<td width='200'> <input type='text' name='ime" . $i. "' value='". $mail->Name . "'></td>";		
-							$novaTabela .= "<td width='230'> <input type='text' name='mail" . $i. "'  value='". $mail->Email . " '></td>";		
-							$novaTabela .= "<td> <input type='text' name='subject" .  $i  . "'  value='". $mail->Subject . "'></td>";		
-							$novaTabela .= "<td> <textarea rows='3' name='mailtekst" .  $i . "' cols='65'>". $mail->Text . "</textarea>";			
+							$novaTabela .= "<h1> Rezultati pretrage za " . $_REQUEST['pretragaInput'] . ": </h1><br><br><br>";
+							$novaTabela .= "<table> <th> </th> <th> Ime i prezime </th> <th> Email </th> <th> Predmet </th> <th> Tekst </th>";
+							$k = 1;
+							$i = 1;
+							foreach($rezultat->fetchAll() as $r)
+							{
+								if (isset($_REQUEST['pretragaInput']) &&  (stristr($r['name'], $_REQUEST['pretragaInput']) || stristr($r['name'], $_REQUEST['pretragaInput']) ))
+								{
+									$novaTabela .= "<tr>";
+									$novaTabela .= "<td>" . $k . ".</td>";		
+									$novaTabela .= "<form action='#' method='POST'>";
+									$novaTabela .= "<td width='200'> <input type='text' name='ime" . $i. "' value='". $r['name'] . "'></td>";		
+									$novaTabela .= "<td width='230'> <input type='text' name='mail" . $i. "'  value='".$r['adresa'] . " '></td>";		
+									$novaTabela .= "<td> <input type='text' name='subject" .  $i  . "'  value='". $r['subject'] . "'></td>";		
+									$novaTabela .= "<td> <textarea rows='3' name='mailtekst" .  $i . "' cols='65'>". $r['tekst'] . "</textarea>";			
+									
+									$novaTabela .= "<td> <input type='submit' name='promjenaMail". $i . "' value='Promijeni' >";
+									$novaTabela .= "</form>";
+									$novaTabela .= "<form action='#' method='POST'>";
+									$novaTabela .= "<td> <input type='submit' name='brisanjeMail".  $i . "' value='Briši' color='red'>";
+									$novaTabela .= "</form>";
+									$novaTabela .= "</tr>";
+									$k++;
+								}
+								$i++;
+							}
 							
-							$novaTabela .= "<td> <input type='submit' name='promjenaMail". $i . "' value='Promijeni' >";
-							$novaTabela .= "</form>";
-							$novaTabela .= "<form action='#' method='POST'>";
-							$novaTabela .= "<td> <input type='submit' name='brisanjeMail".  $i . "' value='Briši' color='red'>";
-							$novaTabela .= "</form>";
-							$novaTabela .= "</tr>";
-							$k++;
+							$novaTabela .= "</table>";
+							$prikazTabela = $novaTabela;
 						}
-						$i++;
 					}
-					
-					$novaTabela .= "</table>";
-					$prikazTabela = $novaTabela;
-				
+			}
+			catch(PDOException $e)
+			{
+				$message ="Connection failed!" . $e->getMessage();
+						echo "<script type='text/javascript'>
+							alert('$message'); 
+							location.href='index.php';
+							</script>";
 			}
 		}
 		else

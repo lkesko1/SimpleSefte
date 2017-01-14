@@ -20,23 +20,40 @@ class IZVJESTAJ extends FPDF
 $file = new IZVJESTAJ();
 $file->AddPage();
 $file->SetFont('Times','',12);
-if (file_exists("Rezervacije.xml")){
-$izvjestaj = new SimpleXMLElement("Rezervacije.xml",null,true);
+try
+{
+	$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+	$veza->exec("set names utf8");
 
-// $file->Write(5, $string); 
-foreach ($izvjestaj->Rezervacija as $r) {
-	$file->Cell(41, 6, $r->Name, 1);
-	$file->Cell(25, 6, $r->Phone_number, 1);
-	$file->Cell(22, 6, $r->Date, 1, 0, 'C');
-	$file->Cell(15, 6, $r->Time, 1, 0, 'C');
-	$file->Cell(11, 6, $r->Broj, 1, 0, 'C');
-	$file->Multicell(70, 6, $r->Napomena, 1);
-	$file->Ln();
-//	$string = str_pad(, 30) . " " . str_pad($r->Phone_number, 15) ." " . str_pad(, 15) . " " . str_pad(, 15)
-	//		. " " . str_pad($r->Broj, 15) . " " . str_pad($r->Napomena, 15) . PHP_EOL;
-  //  $file->Write(5, $string); 
+//Provjera da li postoji tabela	
+	if ($tabele = $veza->query("SHOW TABLES LIKE 'Mail'")) {
+		if(sizeof($tabele) >0) {
+			$rezultatR = $veza->prepare("SELECT * FROM Rezervacija order by id desc");
+			$rezultatR->execute();
+			$rezultat=$rezultatR->fetchAll();
+			sizeof($rezultat);
+			foreach ($rezultat as $r) {	
+				$datumformat = date("Y-m-d", strtotime($r['datum']));
+				$file->Cell(41, 6, $r['name'], 1);
+				$file->Cell(25, 6, $r['phone'], 1);
+				$file->Cell(22, 6, $datumformat, 1, 0, 'C');
+				$file->Cell(15, 6, $r['vrijeme'], 1, 0, 'C');
+				$file->Cell(11, 6, $r['broj'], 1, 0, 'C');
+				$file->Multicell(70, 6, $r['tekst'], 1);
+				$file->Ln();
+			}
+		}
+	}
 }
+catch(PDOException $e)
+{
+			$message ="Connection failed!" . $e->getMessage();
+					echo "<script type='text/javascript'>
+						alert('$message'); 
+						location.href='index.php';
+						</script>";
 }
+
 $file->Output();
 
 ?>
