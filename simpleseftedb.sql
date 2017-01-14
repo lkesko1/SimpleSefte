@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2017 at 07:32 PM
+-- Generation Time: Jan 14, 2017 at 10:25 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -98,7 +98,7 @@ INSERT INTO `novost` (`ID`, `tekst`) VALUES
 CREATE TABLE `ocjena` (
   `id` int(11) NOT NULL,
   `broj` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_slovenian_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovenian_ci;
 
 --
 -- Dumping data for table `ocjena`
@@ -106,10 +106,10 @@ CREATE TABLE `ocjena` (
 
 INSERT INTO `ocjena` (`id`, `broj`) VALUES
 (1, 4),
-(8, 5),
 (6, 2),
-(10, 3),
-(9, 1);
+(8, 5),
+(9, 1),
+(10, 3);
 
 -- --------------------------------------------------------
 

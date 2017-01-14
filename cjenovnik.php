@@ -23,10 +23,11 @@
 			?>		
 		<div class = "red"> 
 			<?php 
-				if(sizeof($vrste) > 0)
-				{
+			//	if(sizeof($vrste) > 0)
+				//{
+					$vrste = $veza->query("select id, naziv from vrsta");
 					print " <div class='red'> <h3> <div class='col4'> Stavka </div> <div class= 'col2'> Cijena </div> <div class='col6'> Sastav/Dodaci </div> </h3> </div>";
-					foreach ($vrste as $v) 
+					foreach ($vrste->fetchAll() as $v) 
 					{
 						print "<h3>" . $v['naziv'] . "</h3>" ;
 						$idV = $v['id'];
@@ -63,12 +64,9 @@
 						}
 					}
 					
-				}
+				// }
 			?>
 
-		<div class="kolona dva">
-			
-		</div>
 		</div>
 		
 </BODY>

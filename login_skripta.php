@@ -14,9 +14,9 @@
 				$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 				$veza->exec("set names utf8");
 			//Provjeri da li postoji ta tabela 
-			if ($rezultat = $veza->query("SHOW TABLES LIKE 'Admin'")) {
+			if ($rezultat = $veza->query("SHOW TABLES LIKE 'admin'")) {
 					if(sizeof($rezultat) >0) {
-						$rezultat = $veza->prepare("SELECT * FROM Admin");
+						$rezultat = $veza->prepare("SELECT * FROM admin");
 						$rezultat->execute();
 						
 						foreach($rezultat->fetchAll() as $r)
