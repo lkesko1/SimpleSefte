@@ -36,7 +36,7 @@
 					//UNOS U BAZU
 					try
 					{
-						$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+						$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 						$veza->exec("set names utf8");
 						$unos = $veza->prepare("Insert into Rezervacija set name =?, phone =?, datum =?, vrijeme =?, broj =?, tekst =?");
 						$unos->bindValue(1,$ime, PDO::PARAM_INT);
@@ -79,7 +79,7 @@
 			{
 				try
 				{
-				$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+				$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 					$veza->exec("set names utf8");
 					$ocjena=$_REQUEST['ocjena'];
 					$unos = $veza->prepare("Insert into ocjena set broj =?");
@@ -116,7 +116,7 @@
 					//UNOS U BAZU
 					try
 					{
-						$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+						$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 						$veza->exec("set names utf8");
 						$unos = $veza->prepare("Insert into mail set name =?, adresa =?, subject =?, tekst =?");
 						$unos->bindValue(1,$ime, PDO::PARAM_INT);
@@ -157,7 +157,7 @@
 				//UNOS U BAZU
 				try
 				{
-					$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+					$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 					$veza->exec("set names utf8");
 					$novost = input($_REQUEST["novostText"]);
 					$unos = $veza->prepare("Insert into novost set tekst =?");

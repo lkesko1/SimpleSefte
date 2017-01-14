@@ -5,7 +5,7 @@
 		{
 			try{
 			//spajanje na bazu
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			$stavke=$veza->prepare("select id, naziv, cijena from stavka");
 			$stavke->execute();
@@ -76,7 +76,7 @@
 		{
 			try{
 			//spajanje na bazu
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			$stavke=$veza->prepare("select id, naziv, cijena from stavka");
 			$stavke->execute();
@@ -162,7 +162,7 @@
 		{
 			try{
 			//spajanje na bazu
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			$sastojci=$veza->prepare("select id, naziv from sastojak");
 			$sastojci->execute();
@@ -224,7 +224,7 @@
 			try
 			{
 			//spajanje na bazu
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			$vrste=$veza->prepare("select id, naziv from vrste");
 			$vrste->execute();
@@ -285,7 +285,7 @@
 	if (isset($_REQUEST['brisanjeStavke']))
 	{
 		try{
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			
 			if (isset($_REQUEST['idStavkeBrisanje']))
@@ -309,7 +309,7 @@
 	if (isset($_REQUEST['brisanjeVeze']))
 	{
 		try{
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			
 			if (isset($_REQUEST['idVezeBrisanje']))
@@ -334,7 +334,7 @@
 	if (isset($_REQUEST['brisanjeSastojka']))
 	{
 		try{
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			
 			if (isset($_REQUEST['idSastojkaBrisanje']))
@@ -359,7 +359,7 @@
 	if (isset($_REQUEST['brisanjeVrste']))
 	{
 		try{
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			
 			if (isset($_REQUEST['idVrsteBrisanje']))

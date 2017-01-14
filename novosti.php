@@ -15,7 +15,7 @@
 								//if (file_exists("Novosti.xml"))
 								try
 								{
-									$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+									$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 									$veza->exec("set names utf8");
 									$upit = $veza->prepare("select * from Novost order by id desc");
 									$upit->execute();

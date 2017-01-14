@@ -3,7 +3,7 @@ global $tabela;
  global $greska;
 	 $greska = "";
 			$id = 1;
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			$rezultatMail = $veza->prepare("SELECT * FROM Mail order by id desc");
 			$rezultatMail->execute();

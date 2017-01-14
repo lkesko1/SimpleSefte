@@ -60,7 +60,7 @@
 		   <h1>Uređivanje</h1>
 			<?php
 			try {
-				$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+				$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 				$veza->exec("set names utf8");
 				$stavke=$veza->query("select id, naziv, cijena from stavka order by naziv desc");
 				$vrste = $veza->query("select id, naziv from vrsta");

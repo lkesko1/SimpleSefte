@@ -14,7 +14,7 @@
 		<div class="col6">  <img src="./../Foto/meni1.jpg" onclick="OtvoriSliku(this)"> </div>
 		<div class="col6">  <img src="./../Foto/meni2.jpg" onclick="OtvoriSliku(this)"> </div>	
 			<?php 
-				$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+				$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 				$veza->exec("set names utf8");
 			
 				$vrste = $veza->query("select id, naziv from vrsta");

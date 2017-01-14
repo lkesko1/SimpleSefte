@@ -3,7 +3,7 @@
 	global $tabela;
 	global $dodajRezervaciju;
 			$id = 1;
-			$veza = new PDO("mysql:dbname=simpleseftedb; host=localhost; charset=utf8", "wtuser", "sifra");
+			$veza = new PDO("mysql:dbname=simpleseftedb; host=mysql-55-centos7; charset=utf8", "wtuser", "sifra");
 			$veza->exec("set names utf8");
 			$rezultatR = $veza->prepare("SELECT * FROM Rezervacija order by id desc");
 			$rezultatR->execute();
